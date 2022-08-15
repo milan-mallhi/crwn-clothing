@@ -1,9 +1,18 @@
+
+
 import {
+  auth,
   signInWithGooglePopup,
   createUserDocumentFromAuth,
+  signInWithGoogleRedirect,
 } from "../../Utils/firebase/firebase.utils";
 
+import SignUpform from "../../components/sign-up-form/sign-up-form.component";
+
+
 const SignIn = () => {
+  
+
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocumentFromAuth(user);
@@ -12,8 +21,9 @@ const SignIn = () => {
   return (
     <div>
       <h1>Sign In Page</h1>
-      <button onClick={logGoogleUser}> Sign in with Google</button>
-    </div>
+      <button onClick={logGoogleUser}> Sign in with Google Popup</button>
+      <SignUpform/>
+    </div> 
   );
 };
 
