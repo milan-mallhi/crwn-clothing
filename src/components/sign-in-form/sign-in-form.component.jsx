@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+
 
 import {
   signInWithGooglePopup,
@@ -20,38 +21,39 @@ const SignInform = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+  await signInWithGooglePopup()
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response)
+
+
       resetFormFields();
     } catch (error) {
-      switch (error.code){
-        case 'auth/wrong-password':
-        alert('incorrect Password')
-        break
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect Password");
+          break;
         case "auth/user-not-found":
-          alert("User not Found")
-          break
+          alert("User not Found");
+          break;
 
-          default:
-            console.log(error)
+        default:
+          console.log(error);
       }
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -85,7 +87,7 @@ const SignInform = () => {
 
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button type='button' buttonType="google" onClick={signInWithGoogle}>
+          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
             Google Sign in
           </Button>
         </div>
